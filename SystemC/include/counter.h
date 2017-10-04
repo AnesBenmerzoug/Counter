@@ -5,7 +5,7 @@
 
 SC_MODULE(counter_module){
   // Inputs
-  sc_in<bool> clock;
+  sc_in<bool> clk;
   sc_in<bool> reset;
   sc_in<bool> up_down_ctrl;
   sc_in<bool> count_enable;
@@ -22,8 +22,8 @@ SC_MODULE(counter_module){
   void do_count();
 
   SC_CTOR(counter_module){
-    SC_CTHREAD(do_count, clock);
-    reset_signal_is(reset, true);
+    SC_METHOD(do_count);
+    sensitive << clk.pos();
   }
 };
 

@@ -5,7 +5,7 @@
 
 SC_MODULE(counter_testbench){
   // Inputs
-  sc_in<bool> clock;
+  sc_in<bool> clk;
   sc_in<sc_uint<17> > count_out;
   sc_in<bool> overflow_intr;
   sc_in<bool> underflow_intr;
@@ -19,7 +19,8 @@ SC_MODULE(counter_testbench){
   void do_testbench();
 
   SC_CTOR(counter_testbench){
-    SC_CTHREAD(do_testbench, clock);
+    SC_THREAD(do_testbench);
+    sensitive << clk.pos();
   }
 };
 

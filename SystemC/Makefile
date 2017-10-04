@@ -30,4 +30,4 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(INC)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm $(OBJ) $(EXE)
+	rm $(OBJ) $(EXE) counter.vcd

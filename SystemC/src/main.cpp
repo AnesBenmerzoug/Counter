@@ -14,7 +14,7 @@ int sc_main(int argc, char* argv[]){
   sc_signal<bool> Overflow_Intr;
   sc_signal<bool> Underflow_Intr;
 
-  counter->clock(Clock);
+  counter->clk(Clock);
   counter->reset(Reset);
   counter->count_enable(Count_Enable);
   counter->up_down_ctrl(Up_Down_Ctrl);
@@ -22,13 +22,15 @@ int sc_main(int argc, char* argv[]){
   counter->overflow_intr(Overflow_Intr);
   counter->underflow_intr(Underflow_Intr);
 
-  testbench->clock(Clock);
+  testbench->clk(Clock);
   testbench->reset(Reset);
   testbench->count_enable(Count_Enable);
   testbench->up_down_ctrl(Up_Down_Ctrl);
   testbench->count_out(Count_Out);
   testbench->overflow_intr(Overflow_Intr);
   testbench->underflow_intr(Underflow_Intr);
+
+  cout << "Starting simulation" << endl;
 
   sc_start();
 

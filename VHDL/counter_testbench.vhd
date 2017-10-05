@@ -9,10 +9,7 @@
 --------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
- 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---USE ieee.numeric_std.ALL;
+USE ieee.numeric_std.ALL;
  
 ENTITY counter_testbench IS
 END counter_testbench;
@@ -27,7 +24,7 @@ ARCHITECTURE behavior OF counter_testbench IS
          Reset : IN  std_logic;
          Count_en : IN  std_logic;
          Up_Down_Ctrl : IN  std_logic;
-         Count_out : OUT  std_logic_vector(16 downto 0);
+         Count_out : OUT  unsigned(16 downto 0);
          Overflow_intr : OUT  std_logic;
          Underflow_intr : OUT  std_logic
         );
@@ -41,9 +38,9 @@ ARCHITECTURE behavior OF counter_testbench IS
    signal Up_Down_Ctrl : std_logic := '0';
 
  	--Outputs
-   signal Count_out : std_logic_vector(16 downto 0);
-   signal Overflow_intr : std_logic;
-   signal Underflow_intr : std_logic;
+   signal Count_out : unsigned(16 downto 0) := (others => '0');
+   signal Overflow_intr : std_logic := '0';
+   signal Underflow_intr : std_logic := '0';
 
    -- Clock period definitions
    constant Clock_period : time := 10 ns;
@@ -74,14 +71,25 @@ BEGIN
    -- Stimulus process
    stim_proc: process
    begin		
-      -- hold reset state for 100 ns.
-      wait for 100 ns;	
-
+      Reset <= '1';
+		Count_en <= '0';
+		Up_Down_Ctrl <= '0';
       wait for Clock_period*10;
-
-      -- insert stimulus here 
-
-      wait;
+		
+		Reset <= '0';
+		Count_en <= '1';
+		Up_Down_Ctrl <= '0';
+		wait for Clock_period*10;
+		
+		Up_Down_Ctrl <= '1';
+      wait for Clock_period*50;
+		
+		Reset <= '1';
+		wait for Clock_period*5;
+		
+		Reset <= '0';
+		wait for Clock_period*50;
+		wait;
    end process;
 
 END;

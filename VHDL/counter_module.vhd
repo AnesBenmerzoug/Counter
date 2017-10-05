@@ -26,7 +26,13 @@ end counter_module;
 architecture Behavioral of counter_module is
 
 begin
-
-
+	process(Clock)
+	begin
+		if Reset = '1' then
+			Count_out <= (others => '0');
+			Overflow_intr <= '0';
+			Underflow_intr <= '0';
+		end if;
+	end process;
 end Behavioral;
 

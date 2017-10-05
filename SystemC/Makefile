@@ -7,10 +7,12 @@ EXE = main
 SRC_DIR = src
 OBJ_DIR = obj
 INC_DIR = include
+VCD_DIR = vcd
 
 SRC = $(wildcard $(SRC_DIR)/*.cpp)
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 INC = $(wildcard $(INC_DIR)/*.h)
+VCD = $(wildcard $(VCD_DIR)/*.vcd)
 
 CPPFLAGS = -I$(INC_DIR) -I$(SYSTEMC_INC_DIR)
 CFLAGS = -Wall
@@ -30,4 +32,4 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(INC)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm $(OBJ) $(EXE) counter.vcd
+	rm $(OBJ) $(EXE) $(VCD)

@@ -2,8 +2,7 @@
 
 void counter_testbench::do_testbench(){
   cout << "@" << sc_time_stamp() << " Creating VCD file" << endl;
-  sc_trace_file* wf = sc_create_vcd_trace_file("counter");
-
+  sc_trace_file* wf = sc_create_vcd_trace_file("vcd/counter");
   cout << "@" << sc_time_stamp() << " Dumping the desired signals" << endl;
   sc_trace(wf, clk, "clock");
   sc_trace(wf, reset, "reset");

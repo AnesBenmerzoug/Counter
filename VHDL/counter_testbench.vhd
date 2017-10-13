@@ -19,12 +19,15 @@ ARCHITECTURE behavior OF counter_testbench IS
     -- Component Declaration for the Unit Under Test (UUT)
  
     COMPONENT counter_module
+	 GENERIC ( 
+			N : integer := 17 
+			);
     PORT(
          Clock : IN  std_logic;
          Reset : IN  std_logic;
          Count_en : IN  std_logic;
          Up_Down_Ctrl : IN  std_logic;
-         Count_out : OUT  unsigned(16 downto 0);
+         Count_out : OUT  unsigned(N-1 downto 0);
          Overflow_intr : OUT  std_logic;
          Underflow_intr : OUT  std_logic
         );
@@ -48,7 +51,11 @@ ARCHITECTURE behavior OF counter_testbench IS
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
-   uut: counter_module PORT MAP (
+   uut: counter_module 
+	GENERIC MAP (
+			 N => 17
+			)
+	PORT MAP (
           Clock => Clock,
           Reset => Reset,
           Count_en => Count_en,

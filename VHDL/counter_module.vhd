@@ -11,13 +11,14 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity counter_module is
-    Port ( Clock : in  STD_LOGIC;
-           Reset : in  STD_LOGIC;
-           Count_en : in  STD_LOGIC;
-           Up_Down_Ctrl : in  STD_LOGIC;
-           Count_out : out  UNSIGNED(16 downto 0);
-           Overflow_intr : out  STD_LOGIC;
-           Underflow_intr : out  STD_LOGIC);
+	 Generic ( N : INTEGER := 17 );
+		 Port ( Clock : in  STD_LOGIC;
+				  Reset : in  STD_LOGIC;
+				  Count_en : in  STD_LOGIC;
+				  Up_Down_Ctrl : in  STD_LOGIC;
+				  Count_out : out  UNSIGNED(N-1 downto 0);
+				  Overflow_intr : out  STD_LOGIC;
+				  Underflow_intr : out  STD_LOGIC );
 end counter_module;
 
 architecture Behavioral of counter_module is
@@ -25,8 +26,9 @@ architecture Behavioral of counter_module is
 begin
 	process(Clock)
 	
-	variable count_new, count_old: UNSIGNED(16 downto 0);
+	variable count_new, count_old: UNSIGNED(N-1 downto 0);
 	variable overflow, underflow : STD_LOGIC;
+	constant count_max : UNSIGNED(N-1 downto 0) := (others => '1');
 	
 	begin
 		if Clock'event and Clock = '1' then
@@ -40,18 +42,18 @@ begin
 					if Up_Down_Ctrl = '1' then
 						count_old := count_new;
 						count_new := count_new + 1;
-						if count_new = 0 and count_old = x"1FFFF" then
+						if count_new = 0 and count_old = count_max then
 							overflow := '1';
-						else
+						else 
 							overflow := '0';
 						end if;
 						underflow := '0';
 					else
 						count_old := count_new;
 						count_new := count_new - 1;
-						if count_new = x"1FFFF" and count_old = 0 then
+						if count_new = count_max and count_old = 0 then
 							underflow := '1';
-						else
+						else 
 							underflow := '0';
 						end if;
 						overflow := '0';

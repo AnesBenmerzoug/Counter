@@ -1,6 +1,6 @@
-#include "../include/counter.h"
+#include "counter.h"
 
-void counter_module::do_count(){
+void CounterModule::do_count(){
   if(reset.read() == true){
     count = 0;
     count_out.write(count);
@@ -12,20 +12,14 @@ void counter_module::do_count(){
       if(up_down_ctrl.read() == true){
         count +=1;
         count_out.write(count);
-        if(count == 0)
-          overflow_intr.write(true);
-        else
-          overflow_intr.write(false);
+        overflow_intr.write(count == 0 ? true : false);
         underflow_intr.write(false);
       }
       else{
         count -=1;
         count_out.write(count);
         overflow_intr.write(false);
-        if(count == 0x1FFFF)
-          underflow_intr.write(true);
-        else
-          underflow_intr.write(false);
+        underflow_intr.write(count == (1 << N) - 1 ? true : false);
       }
     }
   }

@@ -1,16 +1,17 @@
 #include <systemc.h>
-#include "../include/counter.h"
-#include "../include/counter_tb.h"
+#include "counter.h"
+#include "counter_tb.h"
+#include "constants.h"
 
 int sc_main(int argc, char* argv[]){
-  counter_module* counter = new counter_module("Counter");
-  counter_testbench* testbench = new counter_testbench("Testbench");
+  CounterModule* counter = new CounterModule("Counter");
+  CounterTestbench* testbench = new CounterTestbench("Testbench");
 
-  sc_clock Clock("Clock", 10, SC_NS, 0.5, 10, SC_NS);
+  sc_clock Clock("Clock", 10, SC_NS, 0.5, 10, SC_NS, false);
   sc_signal<bool> Reset;
   sc_signal<bool> Count_Enable;
   sc_signal<bool> Up_Down_Ctrl;
-  sc_signal<sc_uint<17> > Count_Out;
+  sc_signal<sc_uint<N> > Count_Out;
   sc_signal<bool> Overflow_Intr;
   sc_signal<bool> Underflow_Intr;
 

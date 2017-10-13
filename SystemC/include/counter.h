@@ -2,8 +2,9 @@
 #define COUNTER_H
 
 #include <systemc.h>
+#include "constants.h"
 
-SC_MODULE(counter_module){
+SC_MODULE(CounterModule){
   // Inputs
   sc_in<bool> clk;
   sc_in<bool> reset;
@@ -11,17 +12,17 @@ SC_MODULE(counter_module){
   sc_in<bool> count_enable;
 
   //Outputs
-  sc_out<sc_uint<17> > count_out;
+  sc_out<sc_uint<N> > count_out;
   sc_out<bool> overflow_intr;
   sc_out<bool> underflow_intr;
 
   // Variables
-  sc_uint<17> count;
+  sc_uint<N> count;
 
   // Main function of the module
   void do_count();
 
-  SC_CTOR(counter_module){
+  SC_CTOR(CounterModule){
     SC_METHOD(do_count);
     sensitive << clk.pos();
   }

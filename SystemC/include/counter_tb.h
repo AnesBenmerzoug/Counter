@@ -2,11 +2,12 @@
 #define COUNTER_TB_H
 
 #include <systemc.h>
+#include "constants.h"
 
-SC_MODULE(counter_testbench){
+SC_MODULE(CounterTestbench){
   // Inputs
   sc_in<bool> clk;
-  sc_in<sc_uint<17> > count_out;
+  sc_in<sc_uint<N> > count_out;
   sc_in<bool> overflow_intr;
   sc_in<bool> underflow_intr;
 
@@ -18,7 +19,7 @@ SC_MODULE(counter_testbench){
   // Main function of the module
   void do_testbench();
 
-  SC_CTOR(counter_testbench){
+  SC_CTOR(CounterTestbench){
     SC_THREAD(do_testbench);
     sensitive << clk.pos();
   }
